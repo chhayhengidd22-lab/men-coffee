@@ -1,0 +1,6 @@
+{
+  "name": "AURA Specialty Coffee & Roastery | ហាងកាហ្វេ អន្តរជាតិ",
+  "description": "International artisanal coffee platform with Laravel REST API architecture, online ordering, customer & admin portals, table reservations, and multi-location management in Khmer & English.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,65 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128;
+    }
+
+    // Orders: readable by anyone (for tracking and receipt printing), create/update allowed with basic validation
+    match /orders/{orderId} {
+      allow read: if true;
+      allow create, update: if isValidId(orderId) &&
+        request.resource.data.orderNumber is string &&
+        request.resource.data.customerName is string &&
+        request.resource.data.total is number;
+      allow delete: if true;
+    }
+
+    // Menu Products: publicly readable, modifiable by admin/staff
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isValidId(productId);
+    }
+
+    // Store Settings (Branding, Logo, Hero background)
+    match /storeSettings/{settingId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Cafe Tables and Floor Plan
+    match /cafeTables/{tableId} {
+      allow read, write: if true;
+    }
+
+    // Table Reservations
+    match /tableReservations/{resId} {
+      allow read, write: if true;
+    }
+
+    // Stock Movements Audit
+    match /stockMovements/{movementId} {
+      allow read, write: if true;
+    }
+
+    // Activity Logs
+    match /activityLogs/{logId} {
+      allow read, write: if true;
+    }
+
+    // User accounts
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Test connection doc
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+  }
+}

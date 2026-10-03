@@ -1,0 +1,79 @@
+{
+  "entities": {
+    "Order": {
+      "title": "Order",
+      "description": "Customer food/drink purchase order and invoice record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "userId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "subtotal": { "type": "number" },
+        "discount": { "type": "number" },
+        "deliveryFee": { "type": "number" },
+        "total": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "brewing", "ready", "delivering", "completed", "cancelled"] },
+        "orderType": { "type": "string", "enum": ["dine_in", "takeaway", "delivery"] },
+        "tableNumber": { "type": "string" },
+        "deliveryAddress": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "paymentStatus": { "type": "string", "enum": ["paid", "pending"] },
+        "couponCode": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "orderNumber", "customerName", "customerPhone", "total", "status", "orderType"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Menu product item in the coffee shop catalogue",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "nameKh": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "basePrice": { "type": "number" },
+        "image": { "type": "string" },
+        "stockCount": { "type": "number" },
+        "inStock": { "type": "boolean" }
+      },
+      "required": ["id", "name", "category", "basePrice", "stockCount"]
+    },
+    "StoreSettings": {
+      "title": "StoreSettings",
+      "description": "Store branding and configuration settings",
+      "type": "object",
+      "properties": {
+        "shopName": { "type": "string" },
+        "shopNameKh": { "type": "string" },
+        "logo": { "type": "string" },
+        "heroBackground": { "type": "string" },
+        "tagline": { "type": "string" },
+        "taglineKh": { "type": "string" },
+        "contactPhone": { "type": "string" },
+        "openingHours": { "type": "string" }
+      },
+      "required": ["shopName"]
+    }
+  },
+  "firestore": {
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "All customer purchase orders and invoice archives"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Store inventory items and coffee catalogue"
+    },
+    "/storeSettings/main": {
+      "schema": "StoreSettings",
+      "description": "Branding, logo, and store operating configuration"
+    }
+  }
+}
